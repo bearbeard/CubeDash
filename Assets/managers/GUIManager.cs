@@ -5,8 +5,8 @@ using UnityEngine;
 public class GUIManager : MonoBehaviour {
 
 	void Start () {
-		GameEventManager.GameStart = GameStart;
-		GameEventManager.GameOver = GameOver;
+		GameEventManager.GameStart += GameStart;
+		GameEventManager.GameOver += GameOver;
 	}
 	
 	void Update () {
@@ -16,7 +16,6 @@ public class GUIManager : MonoBehaviour {
 	}
 
 	private void GameStart() {
-		Debug.Log("GUIManager");
 		enabled = false;
 	}
 

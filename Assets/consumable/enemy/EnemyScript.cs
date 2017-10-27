@@ -20,7 +20,7 @@ public class EnemyScript : MonoBehaviour {
 	}
 
 	private void GameStart() {
-		Debug.Log("EnemyScript");
+		
 	}
 
 	private void GameOver() {

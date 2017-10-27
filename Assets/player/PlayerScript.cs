@@ -22,7 +22,7 @@ public class PlayerScript : MonoBehaviour {
 		meshRenderer = GetComponent<MeshRenderer>();
 	}
 
-	void Start () {
+	void Start() {
 		startPosition = transform.localPosition;
 		GameEventManager.GameStart += GameStart;
 		GameEventManager.GameOver += GameOver;
@@ -30,9 +30,9 @@ public class PlayerScript : MonoBehaviour {
 		meshRenderer.enabled = false;
 		enabled = false;
 	}
-	
-	void Update () {
-		Debug.Log(transform.position);	
+
+	void Update() {
+		CheckIsFallenDown();
 		Move();
 	}
 
@@ -43,11 +43,17 @@ public class PlayerScript : MonoBehaviour {
 	private void Move() {
 		if (Input.GetButtonDown("Jump")) {
 			if (isGrounded) {
-				rigidbody.AddForce(jumpAmount, ForceMode.VelocityChange);			
+				rigidbody.AddForce(jumpAmount, ForceMode.VelocityChange);
 			} else if (canBoost) {
 				rigidbody.AddForce(boostAmount, ForceMode.VelocityChange);
 				canBoost = false;
-			}			
+			}
+		}
+	}
+
+	private void CheckIsFallenDown() {
+		if (transform.position.y < -5f) {
+			GameEventManager.TriggerGameOver();
 		}
 	}
 
