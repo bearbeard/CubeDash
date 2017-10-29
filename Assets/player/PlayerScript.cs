@@ -58,7 +58,6 @@ public class PlayerScript : MonoBehaviour {
 	}
 
 	private void GameStart() {
-		Debug.Log("PlayerScript");
 		transform.localPosition = startPosition;
 		rigidbody.isKinematic = false;
 		meshRenderer.enabled = true;
