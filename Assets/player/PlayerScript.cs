@@ -1,52 +1,56 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerScript : MonoBehaviour {
 
-	public Vector3 startPosition;
+	private static int _score;
+	
+	private Vector3 _startPosition;
 
-	[SerializeField] private float speed;
-	[SerializeField] private Vector3 boostAmount;
-	[SerializeField] private Vector3 jumpAmount;
+	[SerializeField] private float _speed;
+	[SerializeField] private Vector3 _boostAmount;
+	[SerializeField] private Vector3 _jumpAmount;
+	[SerializeField] private Text _scoreText;
 
-	private Rigidbody rigidbody;
-	private MeshRenderer meshRenderer;
-	private bool isGrounded;
-	private bool canBoost;
-	private float xVelocity = 0f;
-	private float yVelocity = 0f;
+	private Rigidbody _rigidbody;
+	private MeshRenderer _meshRenderer;
+	private bool _isGrounded;
+	private bool _canBoost;
 
 	private void Awake() {
-		rigidbody = GetComponent<Rigidbody>();
-		meshRenderer = GetComponent<MeshRenderer>();
+		_rigidbody = GetComponent<Rigidbody>();
+		_meshRenderer = GetComponent<MeshRenderer>();
+		_score = 0;
 	}
 
 	void Start() {
-		startPosition = transform.localPosition;
+		_startPosition = transform.localPosition;
 		GameEventManager.GameStart += GameStart;
 		GameEventManager.GameOver += GameOver;
-		rigidbody.isKinematic = true;
-		meshRenderer.enabled = false;
+		_rigidbody.isKinematic = true;
+		_meshRenderer.enabled = false;
 		enabled = false;
 	}
 
 	void Update() {
 		CheckIsFallenDown();
 		Move();
+		_scoreText.text = _score.ToString();
 	}
 
 	private void FixedUpdate() {
-		rigidbody.AddForce(Vector3.right * speed - rigidbody.velocity, ForceMode.Acceleration);
+		_rigidbody.AddForce(Vector3.right * _speed - _rigidbody.velocity, ForceMode.Acceleration);
 	}
 
 	private void Move() {
 		if (Input.GetButtonDown("Jump")) {
-			if (isGrounded) {
-				rigidbody.AddForce(jumpAmount, ForceMode.VelocityChange);
-			} else if (canBoost) {
-				rigidbody.AddForce(boostAmount, ForceMode.VelocityChange);
-				canBoost = false;
+			if (_isGrounded) {
+				_rigidbody.AddForce(_jumpAmount, ForceMode.VelocityChange);
+			} else if (_canBoost) {
+				_rigidbody.AddForce(_boostAmount, ForceMode.VelocityChange);
+				_canBoost = false;
 			}
 		}
 	}
@@ -58,31 +62,29 @@ public class PlayerScript : MonoBehaviour {
 	}
 
 	private void GameStart() {
-		transform.localPosition = startPosition;
-		rigidbody.isKinematic = false;
-		meshRenderer.enabled = true;
+		transform.localPosition = _startPosition;
+		_rigidbody.isKinematic = false;
+		_meshRenderer.enabled = true;
 		enabled = true;
 	}
 
 	private void GameOver() {
-		rigidbody.isKinematic = true;
-		meshRenderer.enabled = false;
+		_rigidbody.isKinematic = true;
+		_meshRenderer.enabled = false;
 		enabled = false;
 	}
 
 	private void OnCollisionEnter(Collision collision) {
-		isGrounded = true;
-		canBoost = false;
+		_isGrounded = true;
+		_canBoost = false;
 	}
 
 	private void OnCollisionExit(Collision collision) {
-		isGrounded = false;
-		canBoost = true;
+		_isGrounded = false;
+		_canBoost = true;
 	}
 
-	private void OnCollisionStay(Collision collision) {
-
+	public static void IncreaseScore(int amount) {
+		_score += amount;
 	}
-
-
 }

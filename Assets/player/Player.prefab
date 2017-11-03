@@ -70,7 +70,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1900096933320358}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 65.29, y: 1.16, z: 0}
+  m_LocalPosition: {x: -23.57, y: 1.16, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4030329267359914}
@@ -86,7 +86,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0.44750217, g: 0.5394049, b: 0.6838235, a: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -204,10 +204,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d25a6b1b267b7746891ff71a17442e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPosition: {x: 0, y: 0, z: 0}
-  speed: 7
-  boostAmount: {x: 9, y: 1, z: 0}
-  jumpAmount: {x: 0, y: 7, z: 0}
+  StartPosition: {x: 0, y: 0, z: 0}
+  _speed: 7
+  _boostAmount: {x: 9, y: 2, z: 0}
+  _jumpAmount: {x: 0, y: 7, z: 0}
+  _scoreText: {fileID: 0}
 --- !u!124 &124272446584219410
 Behaviour:
   m_ObjectHideFlags: 1
