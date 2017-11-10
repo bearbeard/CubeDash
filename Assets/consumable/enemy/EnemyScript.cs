@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyScript : MonoBehaviour {
 
-	[SerializeField] private Vector3 rotationAmount;
+	[SerializeField] private Vector3 _rotationAmount;
 
 	void Start () {
 		GameEventManager.GameStart += GameStart;
@@ -12,7 +12,7 @@ public class EnemyScript : MonoBehaviour {
 	}
 	
 	void Update () {
-		transform.Rotate(rotationAmount * Time.deltaTime);
+		transform.Rotate(_rotationAmount * Time.deltaTime);
 	}
 
 	private void OnTriggerEnter(Collider other) {
@@ -20,7 +20,7 @@ public class EnemyScript : MonoBehaviour {
 	}
 
 	private void GameStart() {
-		
+		gameObject.SetActive(true);
 	}
 
 	private void GameOver() {

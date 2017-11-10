@@ -20,6 +20,7 @@ public class PlayerScript : MonoBehaviour {
 	private bool _canBoost;
 
 	private void Awake() {
+		Physics.gravity = new Vector3(0f, -25f, 0f);
 		_rigidbody = GetComponent<Rigidbody>();
 		_meshRenderer = GetComponent<MeshRenderer>();
 		_score = 0;
@@ -36,22 +37,29 @@ public class PlayerScript : MonoBehaviour {
 
 	void Update() {
 		CheckIsFallenDown();
-		Move();
+		Jump();
 		_scoreText.text = _score.ToString();
+		Debug.Log(_rigidbody.velocity);
 	}
 
 	private void FixedUpdate() {
 		_rigidbody.AddForce(Vector3.right * _speed - _rigidbody.velocity, ForceMode.Acceleration);
+		//Jump();
 	}
 
-	private void Move() {
+	private void Jump() {
 		if (Input.GetButtonDown("Jump")) {
 			if (_isGrounded) {
-				_rigidbody.AddForce(_jumpAmount, ForceMode.VelocityChange);
+				_rigidbody.AddForce(_jumpAmount, ForceMode.Impulse);
 			} else if (_canBoost) {
 				_rigidbody.AddForce(_boostAmount, ForceMode.VelocityChange);
 				_canBoost = false;
 			}
+		}
+		if (Input.GetButton("Jump")) {
+			Vector3 jumpAddition = new Vector3(0f, 1000f, 0f);
+			jumpAddition *= Time.deltaTime;
+			_rigidbody.AddForce(jumpAddition, ForceMode.Acceleration);
 		}
 	}
 
