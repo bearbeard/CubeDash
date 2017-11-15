@@ -26,7 +26,7 @@ public class PlayerScript : MonoBehaviour {
 		_score = 0;
 	}
 
-	void Start() {
+	private void Start() {
 		_startPosition = transform.localPosition;
 		GameEventManager.GameStart += GameStart;
 		GameEventManager.GameOver += GameOver;
@@ -35,7 +35,7 @@ public class PlayerScript : MonoBehaviour {
 		enabled = false;
 	}
 
-	void Update() {
+	private void Update() {
 		CheckIsFallenDown();
 		Jump();
 		_scoreText.text = _score.ToString();
@@ -44,7 +44,6 @@ public class PlayerScript : MonoBehaviour {
 
 	private void FixedUpdate() {
 		_rigidbody.AddForce(Vector3.right * _speed - _rigidbody.velocity, ForceMode.Acceleration);
-		//Jump();
 	}
 
 	private void Jump() {
@@ -56,11 +55,10 @@ public class PlayerScript : MonoBehaviour {
 				_canBoost = false;
 			}
 		}
-		if (Input.GetButton("Jump")) {
-			Vector3 jumpAddition = new Vector3(0f, 1000f, 0f);
-			jumpAddition *= Time.deltaTime;
-			_rigidbody.AddForce(jumpAddition, ForceMode.Acceleration);
-		}
+		if (!Input.GetButton("Jump") || !_canBoost) return;
+		var jumpAddition = new Vector3(0f, 400f, 0f);
+		jumpAddition *= Time.deltaTime;
+		_rigidbody.AddForce(jumpAddition, ForceMode.Acceleration);
 	}
 
 	private void CheckIsFallenDown() {
